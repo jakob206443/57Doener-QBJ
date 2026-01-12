@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<!-- Font (leicht & schnell) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<title>57Döner – Döner &amp; Lieferservice in Siegen</title>
+<meta content="57Döner in Siegen: Döner, Dürüm, Falafel, Lahmacun &amp; mehr. Online bestellen oder abholen – frisch, schnell, lecker." name="description"/>
+<link href="favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<style>
+    :root{
+      --font-heading:'Oswald', sans-serif;
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+
+      /* Hintergrundfarbe (hier ändern, wenn du einen anderen Ton willst) */
+      --bg:#ffffff;          /* wärmer/ruhiger als vorher */
+      --surface:#ffffff;
+      --text:#2a1b16;
+      --muted:#6a5147;
+      --accent:#7b1f22;      /* Bordeaux */
+      --accent2:#d06f33;     /* Orange */
+      --line:rgba(42,27,22,.12);
+
+      --radius:18px;
+      --radius-sm:14px;
+      --shadow:0 18px 50px rgba(42,27,22,.10);
+      --shadow2:0 14px 34px rgba(42,27,22,.08);
+
+      --ring: rgba(208,111,51,.22);
+      --ease: cubic-bezier(.2,.9,.2,1);
+      --maxw: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: var(--font-body);
+      margin:0;
+      background: var(--bg);
+      color:var(--text);
+      line-height:1.45;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    .container{max-width:var(--maxw);margin:0 auto;padding:24px}
+
+    header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter:saturate(140%) blur(10px);
+      background: rgba(255,255,255,.86);
+      border-bottom: 1px solid rgba(31,35,40,.06);
+    }
+    header .container{display:flex;justify-content:space-between;align-items:center;padding:16px 24px}
+
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{display:block;flex:0 0 auto}
+    .brand-logo{width:48px;height:48px;border-radius:14px;box-shadow:0 10px 24px rgba(42,27,22,.12)}
+    .brand-text{display:flex;flex-direction:column;line-height:1.05}
+    .brand-title{font-family:var(--font-heading);text-transform:uppercase;letter-spacing:.10em;font-weight:700;font-size:18px}
+    .brand-sub{font-size:12px;color:var(--muted);letter-spacing:.16em;font-weight:800}
+
+    nav{display:flex;align-items:center;gap:8px}
+    nav a{
+      font-family:var(--font-heading);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      position:relative;
+      padding:10px 12px;
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+      border-radius:12px;
+      transition: transform .22s var(--ease), background-color .22s var(--ease), color .22s var(--ease);
+      outline:none;
+    }
+    nav a::after{
+      content:"";
+      position:absolute; left:12px; right:12px; bottom:7px;
+      height:2px; border-radius:999px;
+      background: linear-gradient(90deg,var(--accent),var(--accent2));
+      transform: scaleX(0);
+      transform-origin:left;
+      transition: transform .22s var(--ease);
+      opacity:.9;
+    }
+    nav a:hover{background: rgba(31,35,40,.05); color:var(--text); transform: translateY(-1px)}
+    nav a:hover::after{transform: scaleX(1)}
+    nav a:focus-visible{box-shadow: 0 0 0 4px var(--ring)}
+
+    /* HERO: hoher Kontrast, ohne animierte Box/Overlay */
+    .hero{
+      position:relative;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:28px;
+      align-items:center;
+      margin-top:18px;
+      padding:54px 34px;
+      min-height:460px;
+      border-radius:24px;
+      overflow:hidden;
+      color:#fff;
+      background:#0b0b0b;
+      isolation:isolate;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background: url('images/hero-doenerspiess.jpg') center/cover no-repeat;
+      transform: scale(1.03);
+      filter: saturate(1.05) contrast(1.05);
+      z-index:-2;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      /* stärkerer Verlauf für Lesbarkeit */
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.68) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.18) 100%),
+        radial-gradient(900px 520px at 20% 20%, rgba(0,0,0,.35), transparent 60%),
+        radial-gradient(900px 520px at 90% 10%, rgba(0,0,0,.22), transparent 60%);
+      z-index:-1;
+    }
+    .hero > *{ position:relative; z-index:1; }
+
+    .hero h1,.hero p{color:#fff}
+    .hero h1,.hero p{ text-shadow: 0 2px 14px rgba(0,0,0,.55); }
+
+    /* Hero Buttons: outline + hoher Kontrast */
+    .hero .btn-outline{
+      background: transparent;
+      border: 2px solid rgba(255,255,255,.92);
+      color:#fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .hero .btn-outline:hover{
+      background:#fff;
+      color:#1f1f1f;
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px}
+
+    h1, h2, h3{
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin:0;
+    }
+
+    h1{font-size: clamp(28px, 3.6vw, 44px); letter-spacing:.06em; margin: 0 0 10px}
+    h2{margin:0 0 8px;font-size: clamp(20px, 2.2vw, 28px)}
+    h3{margin:10px 0 6px;font-size: 18px}
+    p{margin:0 0 12px;color:var(--muted)}
+    strong{font-size:16px;color:var(--text)}
+
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(31,35,40,.05);
+      color: var(--muted);
+      font-weight:650;
+      font-size: 13px;
+    }
+    .pill b{color:var(--text)}
+
+    /* Unified button system (links + buttons) */
+    .btn, .cta{
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing:.10em;
+      font-weight:700;
+      border-radius: 999px;
+      padding:12px 18px;
+      border:1px solid rgba(31,35,40,.10);
+      background: rgba(31,35,40,.04);
+      color: var(--text);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      text-decoration:none;
+      transition: transform .22s var(--ease), background-color .22s var(--ease), box-shadow .22s var(--ease), filter .22s var(--ease), color .22s var(--ease), border-color .22s var(--ease);
+      will-change: transform;
+      transform: translateZ(0);
+    }
+    .btn:hover, .cta:hover{transform: translateY(-2px); background: rgba(31,35,40,.06)}
+    .btn:active, .cta:active{transform: translateY(0px) scale(.99)}
+    .btn:focus-visible, .cta:focus-visible{box-shadow: 0 0 0 4px var(--ring)}
+
+    .btn-primary, .cta{
+      border:0;
+      background: linear-gradient(135deg,var(--accent), color-mix(in srgb, var(--accent2) 85%, #fff));
+      color:#fff;
+      box-shadow: 0 10px 20px rgba(123,31,34,.18);
+    }
+    .btn-primary:hover, .cta:hover{box-shadow: 0 14px 26px rgba(123,31,34,.24); filter:saturate(1.05)}
+
+    .btn-outline{
+      background: transparent;
+      border: 2px solid rgba(31,35,40,.22);
+      color: var(--text);
+      box-shadow: none;
+    }
+    .btn-outline:hover{
+      background: rgba(31,35,40,.06);
+      border-color: rgba(31,35,40,.28);
+      box-shadow: none;
+      filter:none;
+    }
+    .btn-sm{padding:8px 12px;border-radius:999px;font-size:12px}
+
+    .card{
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow2);
+      border: 1px solid rgba(31,35,40,.06);
+      transform: translateZ(0);
+    }
+    .card--hover{transition: transform .25s var(--ease), box-shadow .25s var(--ease); will-change: transform;}
+    .card--hover:hover{transform: translateY(-3px); box-shadow: var(--shadow)}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+
+    .media{
+      position:relative;
+      overflow:hidden;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, rgba(123,31,34,.10), rgba(255,138,75,.12));
+    }
+    .media img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius: var(--radius-sm);
+      transform: scale(1.02);
+      transition: transform .6s var(--ease);
+      will-change: transform;
+    }
+    .card--hover:hover .media img{transform: scale(1.06)}
+
+    .badge{
+      position:absolute;
+      top:10px; left:10px;
+      display:inline-flex;align-items:center;gap:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(31,35,40,.08);
+      color: var(--text);
+      font-size:12px;
+      font-weight:700;
+      backdrop-filter: blur(8px);
+    }
+
+    .price-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:10px}
+    .price{font-weight:800}
+    .hint{font-size:12px;color:var(--muted);margin:8px 0 0}
+
+    .add-btn{margin-top:12px;width:100%}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+    /* Cart */
+    .cart-trigger{position:relative}
+    .cart-count{
+      position:absolute; top:-6px; right:-6px;
+      min-width:18px; height:18px;
+      border-radius:999px;
+      background: var(--accent2);
+      color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px;
+      font-weight:800;
+      padding:0 6px;
+      box-shadow: 0 8px 16px rgba(208,111,51,.24);
+    }
+
+    dialog.cart{
+      border:0;
+      padding:0;
+      border-radius: 20px;
+      box-shadow: 0 28px 80px rgba(42,27,22,.24);
+      max-width: 520px;
+      width: calc(100% - 24px);
+    }
+    dialog.cart::backdrop{background: rgba(10,10,10,.35)}
+    .cart-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 16px 12px;border-bottom:1px solid rgba(31,35,40,.08)}
+    .cart-title{font-family:var(--font-heading);text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+    .cart-body{padding:12px 16px 16px}
+    .cart-items{display:grid;gap:10px;margin:10px 0 14px}
+    .cart-item{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid rgba(31,35,40,.08);border-radius:14px;background:rgba(255,255,255,.78)}
+    .ci-left{min-width:0}
+    .ci-name{font-weight:800;color:var(--text)}
+    .ci-meta{font-size:12px;color:var(--muted);margin-top:2px}
+    .ci-right{display:flex;align-items:center;gap:8px}
+    .qty{display:inline-flex;align-items:center;gap:8px}
+    .qty b{min-width:18px;text-align:center}
+    .cart-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;padding-top:12px;border-top:1px solid rgba(31,35,40,.08)}
+    .total{font-weight:900}
+
+    /* Add-to-cart buttons on menu rows */
+    .mi-actions{display:flex;align-items:center;gap:10px;white-space:nowrap}
+
+    .divider{height:1px;background:rgba(31,35,40,.08);margin:14px 0}
+
+    /* Menülisten (für erweitertes Sortiment ohne 100 Bilder) */
+    .menu-cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:14px}
+    details.menu-cat{
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid rgba(31,35,40,.06);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    details.menu-cat > summary{
+      cursor:pointer;
+      list-style:none;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    details.menu-cat > summary::-webkit-details-marker{display:none}
+    .cat-title{font-family:var(--font-heading);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+    .cat-meta{color:var(--muted);font-size:12px}
+    .cat-body{padding:0 16px 14px}
+    .menu-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid rgba(31,35,40,.07)}
+    .menu-item:first-child{border-top:0}
+    .mi-left{min-width:0}
+    .mi-name{font-weight:750;color:var(--text)}
+    .mi-desc{font-size:12px;color:var(--muted);margin-top:3px}
+    .mi-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+    .tag{font-size:11px;padding:4px 8px;border-radius:999px;background:rgba(31,35,40,.05);color:var(--muted);font-weight:650}
+    .tag.hot{background: color-mix(in srgb, var(--accent) 12%, #fff); color: var(--accent)}
+    .tag.vegan{background: rgba(0,128,0,.09); color: rgba(0,90,0,1)}
+    .mi-price{font-weight:900;white-space:nowrap}
+
+    footer{text-align:center;margin-top:40px;padding:22px 0;color:var(--muted);font-size:14px}
+
+    /* Lightweight scroll-reveal (failsafe: visible unless JS enables it) */
+    .reveal{opacity:1;transform:none;}
+    html.js .reveal{opacity:1;transform:translateY(14px);transition:opacity .6s var(--ease), transform .6s var(--ease);will-change:opacity, transform;}
+    html.js .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .cta, .card--hover, nav a, .media img, .reveal{transition:none !important}
+      .reveal{opacity:1;transform:none}
+    }
+
+    @media(max-width:900px){
+      header .container{padding:14px 18px}
+      .container{padding:18px}
+      .hero{grid-template-columns:1fr}
+      nav{gap:4px}
+      nav a{padding:9px 10px}
+    }
+  
+    
+    /* Food images */
+    .media img{width:100%;height:190px;object-fit:cover;display:block}
+
+
+/* --- Unified black buttons + Hero hover (added) --- */
+.hero{position:relative;overflow:hidden;}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0);
+  transition:background .35s ease;
+  pointer-events:none;
+}
+
+/* Unify button look (buttons + link-buttons) */
+button,
+.btn,
+.cta,
+a.btn,
+a.cta,
+.hero-cta-white{
+  background:#000 !important;
+  color:#fff !important;
+  border:0 !important;
+  border-radius:999px !important;
+  padding:14px 26px !important;
+  font-family: var(--font-heading, inherit) !important;
+  text-transform: uppercase !important;
+  letter-spacing:.10em !important;
+  font-weight:700 !important;
+  text-decoration:none !important;
+  cursor:pointer !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25) !important;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease !important;
+}
+
+/* Keep small +/- usable */
+.btn-sm,
+button.btn-sm{
+  padding:10px 14px !important;
+}
+
+/* Hover style */
+@media (hover:hover){
+  button:hover,
+  .btn:hover,
+  .cta:hover,
+  a.btn:hover,
+  a.cta:hover,
+  .hero-cta-white:hover{
+    box-shadow: 0 16px 40px rgba(0,0,0,.35) !important;
+    transform: translateY(-1px);
+  }
+
+  /* Hero hover: slightly darken image + lift CTAs a bit */
+  .hero:hover::after{ background: rgba(0,0,0,.18); }
+
+  .hero:hover button,
+  .hero:hover .btn,
+  .hero:hover .cta,
+  .hero:hover a.btn,
+  .hero:hover a.cta,
+  .hero:hover .hero-cta-white{
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.35) !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<header>
+<div class="container">
+<div class="brand">
+<picture aria-label="57Döner Logo" class="brand-mark">
+<source srcset="57doener_logo_256.webp" type="image/webp"/>
+<img alt="57Döner Logo" class="brand-logo" decoding="async" height="48" loading="eager" src="57doener_logo_256.png" width="48"/>
+</picture>
+<div class="brand-text">
+<div class="brand-title">57Döner</div>
+<div class="brand-sub">ECHT. FRISCH. LECKER.</div>
+</div>
+</div>
+<nav aria-label="Hauptnavigation">
+<a href="#menu">Menü</a>
+<a href="#lieferung">Lieferung</a>
+<a href="#kontakt">Kontakt</a>
+<button aria-controls="cartDialog" aria-haspopup="dialog" class="cart-trigger btn btn-sm" id="cartOpen" type="button">
+          Warenkorb <span aria-label="Artikel im Warenkorb" class="cart-count" id="cartCount">0</span>
+</button>
+</nav>
+</div>
+</header>
+<main class="container">
+<section class="hero">
+<div class="reveal">
+<h1>Döner in Siegen – 57Döner</h1>
+<p>Frisch belegt, schnelle Abholung oder Lieferung. Klick &amp; Collect oder direkt online bestellen.</p>
+      <div class="hero-actions">
+        <a class="btn btn-outline" href="#menu">Zum Menü <span aria-hidden="true">→</span></a>
+        <a class="btn btn-outline" href="https://www.lieferando.de/suche?q=57%20D%C3%B6ner" target="_blank" rel="noopener">Bei Lieferando bestellen</a>
+      </div>
+<div aria-hidden="true" class="divider"></div>
+<p style="font-size:13px;margin:0;color:#fff">Täglich geöffnet: <b style="color:#fff">Mo–So 11–23 Uhr</b></p>
+</div>
+</section>
+<!-- PRODUKTBILDER + ERWEITERTES SORTIMENT -->
+<section class="reveal" id="menu" style="margin-top:34px">
+<h2>Menü &amp; Sortiment</h2>
+<p style="margin-bottom:14px">Klassiker, Veggie &amp; Specials – alles frisch, mit unseren Soßen. (Preise: Beispiel)</p>
+<div aria-label="Highlights" class="grid">
+<article class="card card--hover reveal">
+  <div class="media">
+    <span class="badge">🥙 Klassiker</span>
+    <img src="images/doener-klassik.jpg" alt="Döner Klassik" loading="lazy" decoding="async"
+         onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27700%27%20viewBox%3D%270%200%201200%20700%27%3E%3Crect%20width%3D%271200%27%20height%3D%27700%27%20fill%3D%27%23f3f4f6%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%20font-size%3D%2758%27%20fill%3D%27%2399a1ab%27%3EBild%20nicht%20gefunden%3C/text%3E%3C/svg%3E'">
+  </div>
+  <h3>Döner Klassik</h3>
+  <p>Kalb oder Hähnchen, Salat, Tomate, Zwiebel, Soße.</p>
+  <div class="price-row"><span class="price">8,90 €</span><span class="tag">wahlweise scharf</span></div>
+  <div class="note-row"><input class="item-note" type="text" maxlength="60" placeholder="Extrawünsche… (z.B. ohne Zwiebeln)"></div>
+  <button class="btn btn-primary add-btn add-to-cart" type="button" data-name="Döner Klassik" data-price="8.90">In den Warenkorb</button>
+</article>
+
+<article class="card card--hover reveal">
+  <div class="media">
+    <span class="badge">⭐ Special</span>
+    <img src="images/doener-spezial.jpg" alt="Döner Spezial" loading="lazy" decoding="async"
+         onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27700%27%20viewBox%3D%270%200%201200%20700%27%3E%3Crect%20width%3D%271200%27%20height%3D%27700%27%20fill%3D%27%23f3f4f6%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%20font-size%3D%2758%27%20fill%3D%27%2399a1ab%27%3EBild%20nicht%20gefunden%3C/text%3E%3C/svg%3E'">
+  </div>
+  <h3>Döner Spezial</h3>
+  <p>Mit Spezial-Topping & extra Soße (unser Signature-Döner).</p>
+  <div class="price-row"><span class="price">10,90 €</span><span class="tag hot">scharf möglich</span></div>
+  <div class="note-row"><input class="item-note" type="text" maxlength="60" placeholder="Extrawünsche… (z.B. extra Soße)"></div>
+  <button class="btn btn-primary add-btn add-to-cart" type="button" data-name="Döner Spezial" data-price="10.90">In den Warenkorb</button>
+</article>
+
+<article class="card card--hover reveal">
+  <div class="media">
+    <span class="badge">🥗 Veggie</span>
+    <img src="images/falafel-bowl.jpg" alt="Falafel Bowl" loading="lazy" decoding="async"
+         onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27700%27%20viewBox%3D%270%200%201200%20700%27%3E%3Crect%20width%3D%271200%27%20height%3D%27700%27%20fill%3D%27%23f3f4f6%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%20font-size%3D%2758%27%20fill%3D%27%2399a1ab%27%3EBild%20nicht%20gefunden%3C/text%3E%3C/svg%3E'">
+  </div>
+  <h3>Falafel Bowl</h3>
+  <p>Falafel, Salatmix, Hummus, Sesamsoße, Zitrone.</p>
+  <div class="price-row"><span class="price">9,20 €</span><span class="tag vegan">veggie</span></div>
+  <div class="note-row"><input class="item-note" type="text" maxlength="60" placeholder="Extrawünsche… (z.B. ohne Zwiebeln)"></div>
+  <button class="btn btn-primary add-btn add-to-cart" type="button" data-name="Falafel Bowl" data-price="9.20">In den Warenkorb</button>
+</article>
+</div>
+<p class="hint">Tipp: Für noch weniger Ladezeit kannst du später echte Produktfotos als lokale WebP-Dateien speichern und die Unsplash-Links ersetzen.</p>
+<div aria-label="Erweitertes Sortiment" class="menu-cats" style="margin-top:18px">
+<details class="menu-cat reveal" open="">
+<summary>
+<div>
+<div class="cat-title">Döner</div>
+<div class="cat-meta">Kalb oder Hähnchen • Brot / Tasche</div>
+</div>
+<span class="tag">▼</span>
+</summary>
+<div class="cat-body">
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Döner Klassik</div><div class="mi-desc">Salat, Tomate, Zwiebel, Soße</div><div class="mi-tags"><span class="tag">wahlweise scharf</span></div></div>
+<div class="mi-actions">
+<div class="mi-price">8,00 €</div>
+<button class="btn btn-sm add-to-cart" data-name="Döner Klassik" data-price="8.00" type="button">+</button>
+</div>
+</div>
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Döner Käse</div><div class="mi-desc">mit extra Käse</div></div>
+<div class="mi-actions"><div class="mi-price">8,90 €</div><button class="btn btn-sm add-to-cart" data-name="Döner Käse" data-price="8.90" type="button">+</button></div>
+</div>
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Döner XXL</div><div class="mi-desc">mehr Fleisch, mehr Inhalt</div></div>
+<div class="mi-actions"><div class="mi-price">10,50 €</div><button class="btn btn-sm add-to-cart" data-name="Döner XXL" data-price="10.50" type="button">+</button></div>
+</div>
+</div>
+            <div class="menu-item">
+              <div class="mi-left"><div class="mi-name">Döner Spezial</div><div class="mi-desc">Signature-Topping & extra Soße</div><div class="mi-tags"><span class="tag">empfohlen</span></div></div>
+              <div class="mi-actions"><div class="mi-price">10,90 €</div><button class="btn btn-sm add-to-cart" type="button" data-name="Döner Spezial" data-price="10.90">+</button></div>
+            </div>
+
+</details>
+<details class="menu-cat reveal">
+<summary>
+<div>
+<div class="cat-title">Dürüm</div>
+<div class="cat-meta">Wrap • Fleisch oder Falafel</div>
+</div>
+<span class="tag">▼</span>
+</summary>
+<div class="cat-body">
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Dürüm Classic</div><div class="mi-desc">Salat, Soße</div></div>
+<div class="mi-actions"><div class="mi-price">8,90 €</div><button class="btn btn-sm add-to-cart" data-name="Dürüm Classic" data-price="8.90" type="button">+</button></div>
+</div>
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Dürüm Halloumi</div><div class="mi-desc">mit Halloumi, Sesamsoße</div><div class="mi-tags"><span class="tag vegan">veggie</span></div></div>
+<div class="mi-actions"><div class="mi-price">9,50 €</div><button class="btn btn-sm add-to-cart" data-name="Dürüm Halloumi" data-price="9.50" type="button">+</button></div>
+</div>
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Dürüm Scharf</div><div class="mi-desc">mit Chili-Soße</div><div class="mi-tags"><span class="tag hot">hot</span></div></div>
+<div class="mi-actions"><div class="mi-price">9,20 €</div><button class="btn btn-sm add-to-cart" data-name="Dürüm Scharf" data-price="9.20" type="button">+</button></div>
+</div>
+</div>
+</details>
+<details class="menu-cat reveal">
+<summary>
+<div>
+<div class="cat-title">Boxen &amp; Teller</div>
+<div class="cat-meta">mit Pommes oder Reis</div>
+</div>
+<span class="tag">▼</span>
+</summary>
+<div class="cat-body">
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Döner Box</div><div class="mi-desc">Fleisch, Pommes, Soße</div></div>
+<div class="mi-actions"><div class="mi-price">9,50 €</div><button class="btn btn-sm add-to-cart" data-name="Döner Box" data-price="9.50" type="button">+</button></div>
+</div>
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Falafel Box</div><div class="mi-desc">Falafel, Pommes, Hummus</div><div class="mi-tags"><span class="tag vegan">veggie</span></div></div>
+<div class="mi-actions"><div class="mi-price">8,90 €</div><button class="btn btn-sm add-to-cart" data-name="Falafel Box" data-price="8.90" type="button">+</button></div>
+</div>
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Döner Teller</div><div class="mi-desc">mit Salat &amp; Brot</div></div>
+<div class="mi-actions"><div class="mi-price">13,50 €</div><button class="btn btn-sm add-to-cart" data-name="Döner Teller" data-price="13.50" type="button">+</button></div>
+</div>
+</div>
+</details>
+<details class="menu-cat reveal">
+<summary>
+<div>
+<div class="cat-title">Snacks</div>
+<div class="cat-meta">schnell dazu</div>
+</div>
+<span class="tag">▼</span>
+</summary>
+<div class="cat-body">
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Pommes</div><div class="mi-desc">mit Ketchup/Mayo</div></div>
+<div class="mi-actions"><div class="mi-price">3,90 €</div><button class="btn btn-sm add-to-cart" data-name="Pommes" data-price="3.90" type="button">+</button></div>
+</div>
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Chicken Nuggets</div><div class="mi-desc">6 Stück</div></div>
+<div class="mi-actions"><div class="mi-price">5,90 €</div><button class="btn btn-sm add-to-cart" data-name="Chicken Nuggets (6)" data-price="5.90" type="button">+</button></div>
+</div>
+<div class="menu-item">
+<div class="mi-left"><div class="mi-name">Sigara Börek</div><div class="mi-desc">3 Stück</div><div class="mi-tags"><span class="tag vegan">veggie</span></div></div>
+<div class="mi-actions"><div class="mi-price">5,50 €</div><button class="btn btn-sm add-to-cart" data-name="Sigara Börek (3)" data-price="5.50" type="button">+</button></div>
+</div>
+</div>
+</details>
+<details class="menu-cat reveal">
+<summary>
+<div>
+<div class="cat-title">Getränke</div>
+<div class="cat-meta">kalt &amp; frisch</div>
+</div>
+<span class="tag">▼</span>
+</summary>
+<div class="cat-body">
+<div class="menu-item">
+<div class="mi-left">
+<div class="mi-name">Ayran 0,25l</div>
+<div class="mi-desc">Joghurtgetränk</div>
+</div>
+<div class="mi-right">
+<div class="mi-price">2,50 €</div>
+<input class="item-note note-mini" maxlength="50" placeholder="Extra…" type="text"/>
+<button class="btn btn-sm add-to-cart" data-name="Ayran 0,25l" data-price="2.50" type="button">+</button>
+</div>
+</div>
+<div class="menu-item">
+<div class="mi-left">
+<div class="mi-name">Softdrink 0,33l</div>
+<div class="mi-desc">Cola/Fanta/Sprite</div>
+</div>
+<div class="mi-right">
+<div class="mi-price">3,20 €</div>
+<input class="item-note note-mini" maxlength="50" placeholder="Extra…" type="text"/>
+<button class="btn btn-sm add-to-cart" data-name="Softdrink 0,33l" data-price="3.20" type="button">+</button>
+</div>
+</div>
+<div class="menu-item">
+<div class="mi-left">
+<div class="mi-name">Uludağ 0,33l</div>
+<div class="mi-desc">Gazoz</div>
+</div>
+<div class="mi-right">
+<div class="mi-price">3,20 €</div>
+<input class="item-note note-mini" maxlength="50" placeholder="Extra…" type="text"/>
+<button class="btn btn-sm add-to-cart" data-name="Uludağ 0,33l" data-price="3.20" type="button">+</button>
+</div>
+</div>
+<div class="menu-item">
+<div class="mi-left">
+<div class="mi-name">Eistee 0,5l</div>
+<div class="mi-desc">Pfirsich/Zitrone</div>
+</div>
+<div class="mi-right">
+<div class="mi-price">3,50 €</div>
+<input class="item-note note-mini" maxlength="50" placeholder="Extra…" type="text"/>
+<button class="btn btn-sm add-to-cart" data-name="Eistee 0,5l" data-price="3.50" type="button">+</button>
+</div>
+</div>
+<div class="menu-item">
+<div class="mi-left">
+<div class="mi-name">Wasser 0,5l</div>
+<div class="mi-desc">still/spritzig</div>
+</div>
+<div class="mi-right">
+<div class="mi-price">2,80 €</div>
+<input class="item-note note-mini" maxlength="50" placeholder="Extra…" type="text"/>
+<button class="btn btn-sm add-to-cart" data-name="Wasser 0,5l" data-price="2.80" type="button">+</button>
+</div>
+</div>
+<div class="menu-item">
+<div class="mi-left">
+<div class="mi-name">Red Bull 0,25l</div>
+<div class="mi-desc">Energy</div>
+</div>
+<div class="mi-right">
+<div class="mi-price">4,20 €</div>
+<input class="item-note note-mini" maxlength="50" placeholder="Extra…" type="text"/>
+<button class="btn btn-sm add-to-cart" data-name="Red Bull 0,25l" data-price="4.20" type="button">+</button>
+</div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section class="reveal" id="lieferung" style="margin-top:34px">
+<div class="card card--hover">
+<h2>Online bestellen &amp; liefern lassen</h2>
+<p>Bestell direkt über die Website oder per Lieferdienst. Lieferung in Siegen i.d.R. 30–45 Minuten (je nach Auslastung).</p>
+<div class="actions">
+<button class="cta" id="orderNow" type="button">Bestellübersicht öffnen <span aria-hidden="true">→</span></button>
+<a class="btn" href="https://www.lieferando.de/suche?q=57%20D%C3%B6ner%20Siegen" rel="noopener" target="_blank">Lieferando</a>
+<a class="btn" href="https://www.ubereats.com/de/search?q=57%20D%C3%B6ner%20Siegen" rel="noopener" target="_blank">Uber Eats</a>
+<a class="btn" href="https://www.google.com/search?q=57%20D%C3%B6ner%20Siegen%20Lieferdienst" rel="noopener" target="_blank">Weitere Lieferdienste</a>
+</div>
+<p class="hint" style="margin-top:10px">Hinweis: Die Buttons öffnen eine Suche beim jeweiligen Lieferdienst in einem neuen Tab.</p>
+</div>
+</section>
+<section class="grid" id="kontakt" style="margin-top:34px">
+<div class="card card--hover reveal">
+<h3>Kontakt &amp; Standort</h3>
+<p>57Döner • Sandstraße 57, 57072 Siegen</p>
+<p style="margin-bottom:0">Tel: 0271 / 123 45 67 • Öffnungszeiten: Mo–So 11–23 Uhr</p>
+</div>
+<div class="card card--hover reveal">
+<h3>Newsletter</h3>
+<p>Aktionen &amp; Rabatte direkt per Mail (Demoformular).</p>
+<form onsubmit="alert('Danke! (Demoformular)');return false;">
+<label for="email" style="display:block;font-size:13px;color:var(--muted);margin-bottom:6px">E-Mail</label>
+<input id="email" onblur="this.style.boxShadow='none';" onfocus="this.style.boxShadow='0 0 0 4px var(--ring)';" placeholder="name@beispiel.de" required="" style="width:100%;padding:11px 12px;border-radius:14px;border:1px solid rgba(31,35,40,.14);outline:none" type="email"/>
+<div style="height:10px"></div>
+<button class="cta" style="width:100%;border:0;cursor:pointer" type="submit">Anmelden</button>
+</form>
+</div>
+</section>
+<footer class="reveal">
+<div>© 2025 57Döner – Fiktives Projekt für Schulzwecke • Impressum • Datenschutz</div>
+</footer>
+</main>
+<!-- Bestellübersicht / Warenkorb -->
+<dialog aria-labelledby="cartTitle" class="cart" id="cartDialog">
+<div class="cart-head">
+<div class="cart-title" id="cartTitle">Bestellübersicht</div>
+<button class="btn btn-sm" id="cartClose" type="button">Schließen</button>
+</div>
+<div class="cart-body">
+<p class="hint" style="margin:0">Produkte hinzufügen über „In den Warenkorb“ bzw. „+“ im Menü.</p>
+<div aria-live="polite" class="cart-items" id="cartItems"></div>
+<div class="cart-foot">
+<div class="total">Summe: <span id="cartTotal">0,00 €</span></div>
+<div class="cart-actions">
+<button class="btn" id="cartClear" type="button">Leeren</button>
+<button class="btn btn-primary" id="cartCheckout" type="button">Weiter zur Bestellung</button>
+</div>
+</div>
+<p class="hint" style="margin:10px 0 0">Demo: „Weiter zur Bestellung“ zeigt nur eine Zusammenfassung (kein echtes Bezahlsystem).</p>
+</div>
+</dialog>
+<script>
+    // Minimal JS: IntersectionObserver für Scroll-Reveal (kein Framework, kein extra Load)
+    (function () {
+      try{ document.documentElement.classList.add('js'); }catch(e){}
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        for (var i=0; i<els.length; i++) els[i].classList.add('is-visible');
+        return;
+      }
+
+      var io = new IntersectionObserver(function(entries){
+        for (var i=0; i<entries.length; i++){
+          if (entries[i].isIntersecting){
+            entries[i].target.classList.add('is-visible');
+            io.unobserve(entries[i].target);
+          }
+        }
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+      for (var j=0; j<els.length; j++) io.observe(els[j]);
+    })();
+
+    // Mini-Warenkorb (vanilla JS, optional mit localStorage)
+    (function () {
+      try{ document.documentElement.classList.add('js'); }catch(e){}
+      var STORAGE_KEY = '57doener_cart';
+      var cart = [];
+
+      function loadCart(){
+        try{
+          var raw = localStorage.getItem(STORAGE_KEY);
+          cart = raw ? JSON.parse(raw) : [];
+        }catch(e){ cart = []; }
+      }
+
+      function saveCart(){
+        try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); }catch(e){}
+      }
+
+      function formatEUR(num){
+        try{
+          return new Intl.NumberFormat('de-DE', { style:'currency', currency:'EUR' }).format(num);
+        }catch(e){
+          return (Math.round(num*100)/100).toFixed(2).replace('.', ',') + ' €';
+        }
+      }
+
+      function countItems(){
+        var c = 0;
+        for (var i=0;i<cart.length;i++) c += cart[i].qty;
+        return c;
+      }
+
+      function total(){
+        var t = 0;
+        for (var i=0;i<cart.length;i++) t += cart[i].price * cart[i].qty;
+        return t;
+      }
+
+      function upsert(name, price, delta, note){
+        note = (note || "").trim();
+        var key = name + "||" + note;
+        for (var i=0;i<cart.length;i++){
+          if ((cart[i].name + "||" + (cart[i].note||"").trim()) === key){
+            cart[i].qty = Math.max(0, cart[i].qty + delta);
+            if (cart[i].qty === 0) cart.splice(i,1);
+            saveCart();
+            render();
+            return;
+          }
+        }
+        if (delta > 0){
+          cart.push({ name: name, price: price, qty: delta, note: note });
+          saveCart();
+          render();
+        }
+      }
+
+      function render(){
+        var countEl = document.getElementById('cartCount');
+        var itemsEl = document.getElementById('cartItems');
+        var totalEl = document.getElementById('cartTotal');
+        if (countEl) countEl.textContent = String(countItems());
+        if (!itemsEl || !totalEl) return;
+
+        itemsEl.innerHTML = '';
+        if (!cart.length){
+          var empty = document.createElement('div');
+          empty.className = 'hint';
+          empty.textContent = 'Noch nichts drin – wähle oben ein Produkt aus.';
+          itemsEl.appendChild(empty);
+        }else{
+          for (var i=0;i<cart.length;i++){
+            (function(item){
+              var row = document.createElement('div');
+              row.className = 'cart-item';
+              row.innerHTML =
+                '<div class="ci-left">' +
+                  '<div class="ci-name"></div>' +
+                  '<div class="ci-meta"></div>' +
+                  '<input class="ci-note" type="text" maxlength="60" placeholder="Extrawünsche…">' +
+                '</div>' +
+                '<div class="ci-right">' +
+                  '<div class="qty">' +
+                    '<button class="btn btn-sm" type="button" aria-label="minus">–</button>' +
+                    '<b></b>' +
+                    '<button class="btn btn-sm" type="button" aria-label="plus">+</button>' +
+                  '</div>' +
+                  '<div class="mi-price"></div>' +
+                '</div>';
+              row.querySelector('.ci-name').textContent = item.name;
+              row.querySelector('.ci-meta').textContent = formatEUR(item.price) + ' pro Stück';
+              var noteInput = row.querySelector('.ci-note');
+              noteInput.value = item.note || '';
+              noteInput.addEventListener('input', function(){ item.note = noteInput.value; saveCart(); });
+              row.querySelector('b').textContent = String(item.qty);
+              row.querySelector('.mi-price').textContent = formatEUR(item.price * item.qty);
+              var minusBtn = row.querySelectorAll('button')[0];
+              var plusBtn  = row.querySelectorAll('button')[1];
+              minusBtn.addEventListener('click', function(){ upsert(item.name, item.price, -1, item.note || ''); });
+              plusBtn.addEventListener('click', function(){ upsert(item.name, item.price, +1, item.note || ''); });
+              itemsEl.appendChild(row);
+            })(cart[i]);
+          }
+        }
+
+        totalEl.textContent = formatEUR(total());
+      }
+
+      function openCart(){
+        var dlg = document.getElementById('cartDialog');
+        if (!dlg) return;
+        if (typeof dlg.showModal === 'function') dlg.showModal();
+        else dlg.setAttribute('open','open');
+      }
+
+      function closeCart(){
+        var dlg = document.getElementById('cartDialog');
+        if (!dlg) return;
+        if (typeof dlg.close === 'function') dlg.close();
+        else dlg.removeAttribute('open');
+      }
+
+      // Event binding
+      loadCart();
+      render();
+
+      document.addEventListener('click', function(e){
+        var t = e.target;
+        if (t && t.classList && t.classList.contains('add-to-cart')){
+          var name = t.getAttribute('data-name') || 'Produkt';
+          var price = parseFloat((t.getAttribute('data-price') || '0').replace(',', '.')) || 0;
+          var wrap = t.closest('.card, .menu-item') || t.parentElement;
+          var noteEl = wrap ? wrap.querySelector('.item-note') : null;
+          var note = noteEl ? noteEl.value : '';
+          upsert(name, price, 1, note);
+          if (noteEl && noteEl.value) noteEl.value = '';
+        }
+      });
+
+      var openBtn = document.getElementById('cartOpen');
+      var closeBtn = document.getElementById('cartClose');
+      var orderNow = document.getElementById('orderNow');
+      var clearBtn = document.getElementById('cartClear');
+      var checkoutBtn = document.getElementById('cartCheckout');
+
+      if (openBtn) openBtn.addEventListener('click', openCart);
+      if (orderNow) orderNow.addEventListener('click', function(){ openCart(); });
+      if (closeBtn) closeBtn.addEventListener('click', closeCart);
+      if (clearBtn) clearBtn.addEventListener('click', function(){ cart = []; saveCart(); render(); });
+      if (checkoutBtn) checkoutBtn.addEventListener('click', function(){
+        if (!cart.length){ alert('Warenkorb ist leer.'); return; }
+        var lines = [];
+        for (var i=0;i<cart.length;i++) lines.push(cart[i].qty + 'x ' + cart[i].name + ' – ' + formatEUR(cart[i].price*cart[i].qty));
+        lines.push('');
+        lines.push('Summe: ' + formatEUR(total()));
+        // NOTE: keep this syntax-safe (no raw newlines inside quotes)
+        alert('Bestellung (Demo):\n\n' + lines.join('\n'));
+      });
+
+      // ESC closes dialog automatically; also close on backdrop click
+      var dlg = document.getElementById('cartDialog');
+      if (dlg) dlg.addEventListener('click', function(ev){
+        var rect = dlg.getBoundingClientRect();
+        var inDialog = (ev.clientX >= rect.left && ev.clientX <= rect.right && ev.clientY >= rect.top && ev.clientY <= rect.bottom);
+        if (!inDialog) closeCart();
+      });
+    })();
+  </script>
+</body>
+</html>
